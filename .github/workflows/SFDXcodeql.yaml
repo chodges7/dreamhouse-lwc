@@ -34,7 +34,8 @@ jobs:
 
             - name: Run the SFDX Scanner
               run: |
-                  sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'
+                  sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --verbose --outfile 'apexScanResults.sarif'
+                  sfdx scanner:rule:list --category
 
             - name: Archive code coverage results
               uses: actions/upload-artifact@v3
