@@ -35,7 +35,16 @@ jobs:
             - name: Run the SFDX Scanner
               run: |
                   sfdx scanner:run --verbose --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'
-                  sfdx scanner:rule:list --catagory '!Design,!Best Practices'
+
+            # Run a PMD scan?
+            # Taken from https://github.com/liatrio/envelope-game/new/main?filename=.github%2Fworkflows%2Fpmd.yml&workflow_template=pmd
+            # - name: Run PMD
+            #   id: pmd
+            #   uses: pmd/pmd-github-action@967a81f8b657c87f7c3e96b62301cb1a48efef29
+            #   with:
+            #     rulesets: 'rulesets/java/quickstart.xml'
+            #     sourcePath: 'src/main/java'
+            #     analyzeModifiedFilesOnly: false
 
             - name: Upload results to GHAS
               uses: github/codeql-action/upload-sarif@v1
