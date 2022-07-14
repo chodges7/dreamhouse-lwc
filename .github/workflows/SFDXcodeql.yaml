@@ -1,42 +1,42 @@
 name: CodeQL
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  codeql:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'npm'
+    codeql:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
-      # Setup the SFDX CLI
-      - name: Salesforce SFDX CLI Action
-        uses: sfdx-actions/setup-sfdx@v1
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: 16
+                  cache: 'npm'
 
-      # Install java as it is required for the next step
-      - name: Installing java
-        run: sudo apt-get install openjdk-8-jdk
+            # Setup the SFDX CLI
+            - name: Salesforce SFDX CLI Action
+              uses: sfdx-actions/setup-sfdx@v1
 
-      # Install SFDX scanner
-      - name: Installing SFDX scanner
-        run: sfdx plugins:install @salesforce/sfdx-scanner
+            # Install java as it is required for the next step
+            - name: Installing java
+              run: sudo apt-get install openjdk-8-jdk
 
-      - name: Run the SFDX Scanner
-        run: |
-          sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'
+            # Install SFDX scanner
+            - name: Installing SFDX scanner
+              run: sfdx plugins:install @salesforce/sfdx-scanner
 
-      - name: Upload results to GHAS
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: ./apexScanResults.sarif
+            - name: Run the SFDX Scanner
+              run: |
+                  sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'
+
+            - name: Upload results to GHAS
+              uses: github/codeql-action/upload-sarif@v1
+              with:
+                  sarif_file: ./apexScanResults.sarif
