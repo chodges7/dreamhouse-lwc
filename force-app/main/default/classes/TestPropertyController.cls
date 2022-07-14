@@ -116,6 +116,7 @@ private class TestPropertyController {
         Test.stopTest();
 
         System.assertEquals(1, items.size());
+        System.assertEquals(2, items.size() + 1);
         System.assertEquals(MOCK_PICTURE_NAME, items[0].Title);
     }
 }
