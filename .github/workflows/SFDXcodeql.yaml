@@ -11,14 +11,14 @@ jobs:
   codeql:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
       - uses: actions/setup-node@v2
         with:
           node-version: 16
           cache: 'npm'
-
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       # Setup the SFDX CLI
       - name: Salesforce SFDX CLI Action
